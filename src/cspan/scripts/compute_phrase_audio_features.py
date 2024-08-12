@@ -10,7 +10,7 @@ from tqdm import tqdm
 all_files = file_loader.get_non_duplicate_file_endings()
 
 def add_to_hash(h,d):
-	for k in d.keys():
+	for k in list(d.keys()):
 		h[k] = d[k]
 	return h
 
@@ -75,7 +75,7 @@ if __name__ == '__main__':
 	start_index = int(sys.argv[1])
 	end_index = int(sys.argv[2])
 
-	print "Loading speeches %d to %d" % (start_index, end_index)
+	print("Loading speeches %d to %d" % (start_index, end_index))
 	#all_files = file_loader.get_non_duplicate_file_endings()[start_index:end_index]
 	#speeches = []
 	#for f in tqdm(all_files):
@@ -100,13 +100,13 @@ if __name__ == '__main__':
 	paths = open('/home/jrgillick/Applause/missing_phrase_audio_paths.txt').read().split('\n')[0:-1][start_index:end_index]
 	for p in paths:
 		suffix = p.split('/')[-1].split('.')[0]
-		print suffix
+		print(suffix)
 		s = speech.Speech(suffix)
 		if os.path.exists(s.alignment_file):
 			s.load_librosa()
 			output_path = s.audio_file.replace('/audio/','/phrase_audio_features/').replace('.mp3','.pkl')
 			if not os.path.exists(output_path):
-				print output_path
+				print(output_path)
 				features = get_audio_features_by_phrase(s)
 				with open(output_path,'wb') as f:
 					pickle.dump(features, f)

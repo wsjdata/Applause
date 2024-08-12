@@ -7,7 +7,7 @@ import pronouncing
 name_list = ['rick', 'santorum', 'mike', 'pence', 'carly', 'fiorina', 'barack', 'obama', 'rand', 'paul', 'lindsey', 'graham', 'chris', 'christie', 'john', 'kasich', 'gary', 'johnson', 'mike', 'huckabee', 'jeb', 'bush', 'ben', 'carson', 'donald', 'trump', 'bernie', 'sanders', 'marco', 'rubio', 'bill', 'clinton', 'hilary', 'clinton', 'joe', 'biden', 'ted', 'cruz']
 
 def add_to_hash(h,other_hash):
-	for k in other_hash.keys():
+	for k in list(other_hash.keys()):
 		h[k] = other_hash[k]
 	return h
 
@@ -151,7 +151,7 @@ class TextFeatures:
 		return all_phones
 
 	def get_distinct_phone_count(self):
-		return len(get_counts(self.get_all_phones()).keys())
+		return len(list(get_counts(self.get_all_phones()).keys()))
 
 	#def get_syllable_count(self):
 	#	return sum([pronouncing.syllable_count(p) for p in self.phone_list])
@@ -195,7 +195,7 @@ class TextFeatures:
 		return {'thank_you_feature':feature}
 
 	def get_liwc_features(self):
-		all_keys = ["LIWC_" + v for v in liwc_vocab.values()]
+		all_keys = ["LIWC_" + v for v in list(liwc_vocab.values())]
 		keys = list(set(flatten([getLIWC(w.lower()) for w in self.words])))
 		h = {}
 		for k in all_keys:

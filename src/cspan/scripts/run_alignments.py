@@ -29,7 +29,7 @@ def run_alignment(alignment_file_name, transcript_file_name):
                 timestamp,speaker,text = line.split('\t')
                 full_text += text + '\n'
         alignment_cmd = "curl -X POST -F 'audio=@" + audio_file_name + "' -F 'transcript=@" + transcript_file_name.replace("transcripts/","transcripts_clean/") +"' 'http://localhost:32769/transcriptions?async=false' > " + alignment_file_name 
-        print alignment_cmd
+        print(alignment_cmd)
         os.system(alignment_cmd)
 
 for folder in folders:

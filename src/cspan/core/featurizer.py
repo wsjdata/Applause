@@ -14,7 +14,7 @@ with open('/data/corpora/cspan/top_trigrams.pkl') as f:
 
 
 def hash_to_list(h):
-	keys = h.keys(); keys.sort()
+	keys = list(h.keys()); keys.sort()
 	l = [h[k] for k in keys]
 	return l
 
@@ -44,13 +44,13 @@ class Featurizer:
 
 	def get_audio_feature_names(self):
 		h = self.s.phrase_audio_features[0]
-		keys = h.keys(); keys.sort()
+		keys = list(h.keys()); keys.sort()
 		return keys
 
 	def get_euphony_feature_names(self):
 		text = self.s.alignment.get_phrase_text()
 		tfs = text_features.TextFeatures(text[0]).get_euphony_features()
-		keys = tfs.keys(); keys.sort()
+		keys = list(tfs.keys()); keys.sort()
 		return keys
 
 	def get_rst_feature_names(self):
@@ -59,19 +59,19 @@ class Featurizer:
 	def get_liu_feature_names(self):
 		text = self.s.alignment.get_phrase_text()
 		tfs = text_features.TextFeatures(text[0]).get_liu_features()
-		keys = tfs.keys(); keys.sort()
+		keys = list(tfs.keys()); keys.sort()
 		return keys
 
 	def get_name_feature_names(self):
 		text = self.s.alignment.get_phrase_text()
 		tfs = text_features.TextFeatures(text[0]).get_name_features()
-		keys = tfs.keys(); keys.sort()
+		keys = list(tfs.keys()); keys.sort()
 		return keys
 
 	def get_phone_feature_names(self):
 		phrase_list = self.s.alignment.phrase_list
 		phone_feats = phone_features.PhoneFeatures(list(np.array(self.s.alignment.clean_words)[phrase_list[0]]))
-		keys = phone_feats.get_all_features().keys(); keys.sort()
+		keys = list(phone_feats.get_all_features().keys()); keys.sort()
 		return keys
 
 	def get_text_and_labels(self):
@@ -109,7 +109,7 @@ class Featurizer:
 		feature_name_lists = [[l.split(':')[0] for l in line] for line in split_lines]
 		feats = []
 		if len(rst_lines) != len(self.s.alignment.get_phrase_text()):
-			print "RST failed for " + self.s.file_path
+			print("RST failed for " + self.s.file_path)
 			return
 		for line in feature_name_lists:
 			h = {}
@@ -142,10 +142,10 @@ class Featurizer:
 		return sims
 
 	def longest_common_substring(self, s1, s2):
-		m = [[0] * (1 + len(s2)) for i in xrange(1 + len(s1))]
+		m = [[0] * (1 + len(s2)) for i in range(1 + len(s1))]
 		longest, x_longest = 0, 0
-		for x in xrange(1, 1 + len(s1)):
-			for y in xrange(1, 1 + len(s2)):
+		for x in range(1, 1 + len(s1)):
+			for y in range(1, 1 + len(s2)):
 				if s1[x - 1] == s2[y - 1]:
 					m[x][y] = m[x - 1][y - 1] + 1
 					if m[x][y] > longest:
@@ -223,7 +223,7 @@ class Featurizer:
 
 	def get_mean_vector_features(self):
 		text = self.s.alignment.get_phrase_text()
-		return [text_features.TextFeatures(unicode(text)).get_mean_vector(t) for t in text]
+		return [text_features.TextFeatures(str(text)).get_mean_vector(t) for t in text]
 
 	#def get_all_features(self):
 	#	return np.hstack([self.get_audio_features(),self.get_euphony_features(),self.get_liu_features()])

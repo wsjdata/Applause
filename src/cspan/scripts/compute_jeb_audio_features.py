@@ -10,7 +10,7 @@ from tqdm import tqdm
 all_files = file_loader.get_non_duplicate_file_endings()
 
 def add_to_hash(h,d):
-	for k in d.keys():
+	for k in list(d.keys()):
 		h[k] = d[k]
 	return h
 
@@ -119,7 +119,7 @@ import jeb_speech
 jeb = jeb_speech.Speech('jeb')
 jeb.load_librosa()
 output_path = '/home/jrgillick/jeb_audio_features.pkl'
-print output_path
+print(output_path)
 features = get_audio_features_by_phrase(jeb)
 with open(output_path,'wb') as f:
 	pickle.dump(features, f)

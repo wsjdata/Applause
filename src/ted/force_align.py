@@ -16,7 +16,7 @@ for audio_filename in audio_filenames:
     path = "/data/corpora/ted/forced_alignments/" + json_filename
 
     if not os.path.exists(path):
-        print path
+        print(path)
 
         remote_audio_dir = "/data/corpora/ted/audio"
         remote_transcript_dir = "/data/corpora/ted/transcripts_clean/"
@@ -54,5 +54,5 @@ for audio_filename in audio_filenames:
         os.system("rm temp_text.txt")
 
     else:
-        print "Skipping: " + path
+        print("Skipping: " + path)
 

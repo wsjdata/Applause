@@ -8,7 +8,7 @@ folders = os.listdir(transcripts_dir)
 def get_speaker_list_from_folder(folder):
     transcript_files = os.listdir(transcripts_dir + folder)
     speaker_list_file_name = speaker_lists_dir + folder + '.txt'
-    print speaker_list_file_name
+    print(speaker_list_file_name)
     speaker_list = []
     for transcript_file in transcript_files:
         # Create folder to store the alignment files

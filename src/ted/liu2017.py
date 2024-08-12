@@ -136,7 +136,7 @@ def predict(X, Y):
 		clf = GridSearchCV(logreg, {'C':(0.001, .01, .1, 1, 3, 5)}, cv=3)
 		clf.fit(X_train, y_train)
 
-		print clf.best_params_, len(y_train)
+		print(clf.best_params_, len(y_train))
 		y_true, y_pred = y_test, clf.predict(X_test)
 		for i in range(len(y_true)):
 			if y_true[i] == y_pred[i]:
@@ -155,10 +155,10 @@ def predict(X, Y):
 	recall = (true_pos / (true_pos + false_neg))
 	f1 = 2*(precision*recall)/(precision+recall)
 	std=math.sqrt( (acc * (1-acc)) / bigtot )
-	print "Accuracy: %.3f +/- %.3f (%s/%s)" % (acc, 1.96*std, bigcor, bigtot)
-	print "Precision: %.3f" % (precision)
-	print "Recall: %.3f" % (recall)
-	print "F-Score: %.3f" % (f1)
+	print("Accuracy: %.3f +/- %.3f (%s/%s)" % (acc, 1.96*std, bigcor, bigtot))
+	print("Precision: %.3f" % (precision))
+	print("Recall: %.3f" % (recall))
+	print("F-Score: %.3f" % (f1))
 
 	# print feature weights
 	logreg=linear_model.LogisticRegression(penalty='l1', C=0.1)
@@ -172,15 +172,15 @@ def predict(X, Y):
 		id=vocab[word]
 		reverseVocab[id]=word
 
-	zipped=zip(logreg.coef_[0], reverseVocab)			# zip two lists together to iterate through them simultaneously
+	zipped=list(zip(logreg.coef_[0], reverseVocab))			# zip two lists together to iterate through them simultaneously
 	zipped.sort(key = lambda t: t[0], reverse=True)		# sort the two lists by the values in the first (the coefficients)
-	print "%s\t%.3f\n" % ("INTERCEPT", logreg.intercept_)
+	print("%s\t%.3f\n" % ("INTERCEPT", logreg.intercept_))
 
 	for (weight, word) in zipped[:10]:
-		print "%s\t%.3f" % (word, weight)
+		print("%s\t%.3f" % (word, weight))
 
 	for (weight, word) in zipped[-10:]:
-		print "%s\t%.3f" % (word, weight)
+		print("%s\t%.3f" % (word, weight))
 
 
 

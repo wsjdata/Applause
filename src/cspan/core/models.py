@@ -58,7 +58,7 @@ def evaluate_model(model, X, y, model_type='sklearn',verbose=True):
 	precision, recall, f1, support = [l[1] for l in precision_recall_fscore_support(y_true, y_pred)]
 	#print "Accuracy: %.3f +/- %.3f (%s/%s)" % (acc, 1.96*std, total_correct, len(total_true))
 	if verbose:
-		print "Accuracy: %.3f +/- %.3f (%s/%s) | Precision: %.3f | Recall: %.3f | F1: %.3f" % (acc, 1.96*std, total_correct, len(total_true), precision, recall, f1)
+		print("Accuracy: %.3f +/- %.3f (%s/%s) | Precision: %.3f | Recall: %.3f | F1: %.3f" % (acc, 1.96*std, total_correct, len(total_true), precision, recall, f1))
 	#return (acc, precision, recall, f1)
 	return y_true, y_pred
 	#return total_correct, len(y)
@@ -132,7 +132,7 @@ def format_lstm_input(sequence_list,labels,input_size,lstm_length=5):
 	formatted_list = []
 	formatted_labels = []
 	for i, sequence in enumerate(sequence_list):
-		for j in tqdm(range(lstm_length-1,len(sequence))):
+		for j in tqdm(list(range(lstm_length-1,len(sequence)))):
 			formatted_list.append(sequence[j-lstm_length+1:j+1].reshape(1,lstm_length,input_size))
 			formatted_labels.append(labels[i][j])
 	return formatted_list, formatted_labels
@@ -142,7 +142,7 @@ def format_multiple_phrase_input(sequence_list,labels,phrase_count=5):
 	formatted_list = []
 	formatted_labels = []
 	for i, sequence in enumerate(sequence_list):
-		for j in tqdm(range(phrase_count-1,len(sequence))):
+		for j in tqdm(list(range(phrase_count-1,len(sequence)))):
 			formatted_list.append(sequence[j-phrase_count+1:j+1].reshape(-1))
 			formatted_labels.append(labels[i][j])
 	return formatted_list, formatted_labels
@@ -208,7 +208,7 @@ def format_multiple_phrase_input_with_deltas(sequence_list,labels,phrase_count=5
 	formatted_list = []
 	formatted_labels = []
 	for i, sequence in enumerate(sequence_list):
-		for j in tqdm(range(phrase_count-1,len(sequence))):
+		for j in tqdm(list(range(phrase_count-1,len(sequence)))):
 			l = []
 			for k in range(phrase_count):
 				l_initial = list(sequence[j-k])

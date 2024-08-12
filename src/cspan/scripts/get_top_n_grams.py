@@ -10,17 +10,17 @@ with open('/data/corpora/cspan/bigram_counts.pkl') as f:
 with open('/data/corpora/cspan/trigram_counts.pkl') as f:
 	trigram_counts = pickle.load(f)
 
-u_order = np.argsort(unigram_counts.values())
-b_order = np.argsort(bigram_counts.values())
-t_order = np.argsort(trigram_counts.values())
+u_order = np.argsort(list(unigram_counts.values()))
+b_order = np.argsort(list(bigram_counts.values()))
+t_order = np.argsort(list(trigram_counts.values()))
 
-unigrams=zip(np.array(unigram_counts.keys())[u_order],np.array(unigram_counts.values())[u_order])
+unigrams=list(zip(np.array(list(unigram_counts.keys()))[u_order],np.array(list(unigram_counts.values()))[u_order]))
 unigrams.reverse()
 
-bgrams=zip(np.array(bigram_counts.keys())[b_order],np.array(bigram_counts.values())[b_order])
+bgrams=list(zip(np.array(list(bigram_counts.keys()))[b_order],np.array(list(bigram_counts.values()))[b_order]))
 bgrams.reverse()
 
-tgrams=zip(np.array(trigram_counts.keys())[t_order],np.array(trigram_counts.values())[t_order])
+tgrams=list(zip(np.array(list(trigram_counts.keys()))[t_order],np.array(list(trigram_counts.values()))[t_order]))
 tgrams.reverse()
 
 top_unigrams = [v for v in unigrams if v[1] >=5]

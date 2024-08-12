@@ -3,8 +3,9 @@ import os, sys
 import re
 import spacy
 from sklearn.utils import shuffle
+import importlib
 
-reload(sys)
+importlib.reload(sys)
 sys.setdefaultencoding('utf8')
 
 nlp = spacy.load('en')
@@ -174,7 +175,7 @@ class Transcript:
     def get_dense_liwc_features(self,sentence):
         a = np.zeros(len(vocab))
         sparse_feats = self.get_sparse_liwc_features(sentence)
-        for k in sparse_feats.keys():
+        for k in list(sparse_feats.keys()):
             a[k-1] = float(sparse_feats[k]) / len(sentence)
         return a
         
@@ -222,9 +223,9 @@ for t in all_transcripts:
             f.write(txt)
         audio_file = t.filename.replace("/transcripts_clean","/audio").replace(".html",".mp3")
         cmd = "cp " + audio_file + " temp_audio.mp3"
-        print cmd
+        print(cmd)
         os.system(cmd)
         json_file = t.filename.replace("/transcripts_clean","/forced_alignments").replace(".html",".json")
         alignment_cmd = "curl -X POST -F 'audio=@temp_audio.mp3' -F 'transcript=<temp_text.txt' 'http://localhost:32769/transcriptions?async=false' > " + json_file
-        print alignment_cmd
+        print(alignment_cmd)
         os.system(alignment_cmd)

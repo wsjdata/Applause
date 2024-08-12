@@ -49,7 +49,7 @@ class Speech:
 			with open(preds_path) as f:
 				self.preds = pickle.load(f)
 		except IOError:
-			print "Preds file not found for %s" % (file_path)
+			print("Preds file not found for %s" % (file_path))
 
 	def load_stored_crowd_rmse(self):
 		path = '/data/corpora/cspan/crowd_rmse/' + self.file_path + '.pkl'
@@ -82,7 +82,7 @@ class Speech:
 
 	def normalize_phrase_audio_features(self):
 		cats = {}
-		for k in self.phrase_audio_features[0].keys():
+		for k in list(self.phrase_audio_features[0].keys()):
 			cats[k] = []
 		for f in self.phrase_audio_features:
 			if f is not None:
@@ -90,17 +90,17 @@ class Speech:
 					cats[c].append(f[c])
 		means = {}
 		devs = {}
-		for k in cats.keys():
+		for k in list(cats.keys()):
 			means[k] = np.mean(cats[k])
 			devs[k] = np.std(cats[k])
     
 		for i,f in enumerate(self.phrase_audio_features):
 			if f is None: #Set to zeros if data is missing
 				self.phrase_audio_features[i] = {}
-				for k in cats.keys():
+				for k in list(cats.keys()):
 					self.phrase_audio_features[i][k] = 0.
 			else:
-				for k in cats.keys():
+				for k in list(cats.keys()):
 					f[k] -= means[k]
 					if devs[k] != 0:
 						f[k] /= devs[k]

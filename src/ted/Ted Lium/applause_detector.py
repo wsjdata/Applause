@@ -33,7 +33,7 @@ class ApplauseDetector:
         return features
     
     def normalize_X(self,X,means,std_devs):
-        for i in xrange(X.shape[1]):
+        for i in range(X.shape[1]):
             X[:,i] -= means[i]
             X[:,i] /= std_devs[i]
         return X

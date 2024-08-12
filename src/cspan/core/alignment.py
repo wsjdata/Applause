@@ -51,11 +51,11 @@ class Alignment:
 		
 	def get_start_times(self):
 		words = self.get_words()
-		return([w['start'] if 'start' in w.keys() else None for w in words])
+		return([w['start'] if 'start' in list(w.keys()) else None for w in words])
 
 	def get_end_times(self):
 		words = self.get_words()
-		return([w['end'] if 'end' in w.keys() else None for w in words])
+		return([w['end'] if 'end' in list(w.keys()) else None for w in words])
 		
 	# Gets the index of the last word that STARTS before the given time t
 	def get_last_index_before_time(self, t):
@@ -116,9 +116,9 @@ class Alignment:
 			end_index = self.words[indices[-1]]['endOffset']
 			cut_list = [(self.words[i]['startOffset'], self.words[i]['endOffset']) for i in indices if not 'start' in self.words[i]]
 			if len(cut_list) > 0:
-				print "using"
+				print("using")
 				for c in cut_list:
-					print self.transcript[c[0]:c[1]]
+					print(self.transcript[c[0]:c[1]])
 				s = self.transcript[start_index:cut_list[0][0]]
 				for index, start_end in enumerate(cut_list[0:-1]):
 					start = start_end[0]; end = start_end[1]

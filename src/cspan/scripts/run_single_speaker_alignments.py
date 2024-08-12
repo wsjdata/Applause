@@ -9,7 +9,7 @@ folders = os.listdir(transcripts_dir)
 for folder in folders:
     transcript_files = os.listdir(transcripts_dir + folder)
     speaker_list = open(speaker_lists_dir + folder + '.txt').read().split('\n')
-    print speaker_list
+    print(speaker_list)
 
     for transcript_file in transcript_files:
         alignment_folder_name = alignments_dir + folder + '/' + transcript_file.replace('.txt','')
@@ -29,6 +29,6 @@ for folder in folders:
             with open('temp_txt.txt','wb') as f:
                 f.write(full_text)
             alignment_cmd = "curl -X POST -F 'audio=@" + audio_file_name + "' -F 'transcript=@temp_txt.txt' 'http://localhost:32769/transcriptions?async=false' > " + alignment_file_name
-            print alignment_cmd
+            print(alignment_cmd)
             os.system(alignment_cmd)
             os.system('rm temp_txt.txt')

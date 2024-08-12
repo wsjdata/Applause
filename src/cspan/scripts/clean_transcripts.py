@@ -11,7 +11,7 @@ def convert_folder(folder):
         transcript_file_name = transcripts_dir + folder + "/" + transcript_file
         clean_file_name = clean_transcripts_dir + folder + "/" + transcript_file
         if os.path.exists(transcript_file_name) and not os.path.exists(clean_file_name):
-            print transcript_file_name
+            print(transcript_file_name)
             lines = open(transcript_file_name).read().split('\n')
             link = lines[0]
             speaker_list = lines[1]

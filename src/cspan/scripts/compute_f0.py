@@ -25,6 +25,6 @@ if __name__ == '__main__':
     files=files[start_file:end_file]
     for f in files:
         t0 = time.time()
-        print f.replace("/audio","/f0").replace(".mp3",".f0")
+        print(f.replace("/audio","/f0").replace(".mp3",".f0"))
         run_reaper(f)
-        print "finished %s in %s seconds" % (f, str(time.time() - t0))
+        print("finished %s in %s seconds" % (f, str(time.time() - t0)))

@@ -2,7 +2,7 @@
 import sys, os
 from bs4 import BeautifulSoup
 import urllib3
-import urllib
+import urllib.request, urllib.parse, urllib.error
 http = urllib3.PoolManager()
 
 video_urls = []
@@ -90,8 +90,8 @@ def save_transcript(filename, url, subjects, t):
             f.write(row[0] + '\t' + row[1] + '\t' + row[2] + '\n')
 
 #if __name__ == '__main__':
-for person in person_ids.keys():
-    print("Processing " + person)
+for person in list(person_ids.keys()):
+    print(("Processing " + person))
     os.system("mkdir ~/cspan/transcripts/" + person)
     urls = get_video_urls(person_ids[person])
     index = 0

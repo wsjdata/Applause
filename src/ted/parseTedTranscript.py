@@ -4,11 +4,12 @@
 # Extract timestamps + text from TED transcripts 
 # Input = html file of transcript
 
-import sys,re,string,urllib,time,urllib2
+import sys,re,string,urllib.request,urllib.parse,urllib.error,time,urllib.request,urllib.error,urllib.parse
 from bs4 import BeautifulSoup
 import os.path
+import importlib
 
-reload(sys)
+importlib.reload(sys)
 sys.setdefaultencoding('utf8')
 
 def format(text):
@@ -36,7 +37,7 @@ def proc(filename):
 			texts.append(format(te.text.lstrip().rstrip()))
 
 	for i in range(len(timestamps)):
-		print "%s\t%s" % (timestamps[i], texts[i])
+		print("%s\t%s" % (timestamps[i], texts[i]))
 
 
 proc(sys.argv[1])

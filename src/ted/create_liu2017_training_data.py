@@ -1,10 +1,11 @@
-from __future__ import unicode_literals
+
 import glob, os, sys,re
 import numpy as np
 import spacy
 from random import shuffle
+import importlib
 
-reload(sys)
+importlib.reload(sys)
 sys.setdefaultencoding('utf8')
 nlp = spacy.load('en')
 
@@ -19,7 +20,7 @@ def proc(filename):
 		cols=line.split("\t")
 		timeparts=cols[0].split(":")
 		text=cols[1]
-		alltext+="#NEWLINE#" + unicode(text).encode("utf-8")
+		alltext+="#NEWLINE#" + str(text).encode("utf-8")
 	
 	file.close()
 	i=0
@@ -57,6 +58,6 @@ for filename in glob.glob("*.html"):
 
 shuffle(applause_no)
 for i in range(len(applause_yes)):
-	print "%s\t%s" % ("1", re.sub("\s+", " ", applause_yes[i]))
-	print "%s\t%s" % ("0", re.sub("\s+", " ", applause_no[i]))
+	print("%s\t%s" % ("1", re.sub("\s+", " ", applause_yes[i])))
+	print("%s\t%s" % ("0", re.sub("\s+", " ", applause_no[i])))
 
