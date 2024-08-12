@@ -7,7 +7,7 @@ http = urllib3.PoolManager()
 
 video_urls = []
 
-person_ids = {
+""" person_ids = {
     'barack_obama': 55625,
     'donald_trump': 20967,
     'hilary_clinton': 19027,
@@ -27,13 +27,19 @@ person_ids = {
     'lindsey_graham': 36782,
     'rick_santorum': 2249,
     'joe_biden': 34
+} """
+
+person_ids = {
+    'donald_trump': 20967
 }
 
-def construct_base_url(person_id):
-    return "https://www.c-span.org/search/?sdate=12%2F01%2F2015&edate=12%2F01%2F2016&searchtype=Videos&sort=Most+Recent+Airing&text=0&all%5B%5D=campaign&all%5B%5D=2016&personid%5B%5D="+str(person_id)+"&seriesid%5B%5D=91&formatid%5B%5D=55&show100=&sdate=12%2F01%2F2015&edate=12%2F01%2F2016&searchtype=Videos&sort=Most+Recent+Airing&text=0&all%5B%5D=campaign&all%5B%5D=2016&personid%5B%5D="+str(person_id)+"&seriesid%5B%5D=91&formatid%5B%5D=55&ajax&page="
 
+def construct_base_url(person_id):
+    #return "https://www.c-span.org/search/?sdate=12%2F01%2F2015&edate=12%2F01%2F2016&searchtype=Videos&sort=Most+Recent+Airing&text=0&all%5B%5D=campaign&all%5B%5D=2016&personid%5B%5D="+str(person_id)+"&seriesid%5B%5D=91&formatid%5B%5D=55&show100=&sdate=12%2F01%2F2015&edate=12%2F01%2F2016&searchtype=Videos&sort=Most+Recent+Airing&text=0&all%5B%5D=campaign&all%5B%5D=2016&personid%5B%5D="+str(person_id)+"&seriesid%5B%5D=91&formatid%5B%5D=55&ajax&page="
+    return "https://www.c-span.org/search/?sdate=12%2F01%2F2023&edate=12%2F01%2F2025&congressSelect=&yearSelect=&searchtype=Videos&sort=Most+Recent+Airing&text=0&all%5B%5D=campaign&all%5B%5D=2024&personid%5B%5D="+str(person_id)+"&seriesid%5B%5D=91&formatid%5B%5D=55&ajax&page="
 def get_video_urls(person_id):
     base_url = construct_base_url(person_id)
+    #print(base_url)
     video_urls = []
     page = 1
     finished = False
@@ -42,7 +48,9 @@ def get_video_urls(person_id):
         url = base_url + str(page)
         #r = urllib.urlopen(url).read()
         r = http.request('GET',url)
+        
         soup = BeautifulSoup(r.data,"html5lib")
+        print(soup)
         search_results = soup.find_all("li", class_="onevid")
         if len(search_results) == 0:
             finished = True
@@ -94,9 +102,12 @@ for person in list(person_ids.keys()):
     print(("Processing " + person))
     os.system("mkdir ~/cspan/transcripts/" + person)
     urls = get_video_urls(person_ids[person])
+    
     index = 0
     for url in urls:
+        print(url)
         subjects, t = get_transcript(url)
+        #print(url)
         if len(t) > 0:
             print(url)
             filename = "/home/jrgillick/cspan/transcripts/" + person + "/" + person + "_" + str(index) + ".txt"
